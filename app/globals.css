@@ -1,26 +1,244 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* Vital Balance design tokens (see DESIGN.md) */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --color-forest: #092d28;
+  --color-forest-deep: #001713;
+  --color-forest-soft: #2c4d47;
+  --color-mint: #0dce91;
+  --color-mint-strong: #006c4a;
+  --color-herbal: #1b4d03;
+  --color-herbal-soft: #679d4c;
+  --color-porcelain: #f7faf7;
+  --color-surface-low: #f1f4f1;
+  --color-surface: #ebefec;
+  --color-surface-high: #e0e3e0;
+  --color-ink: #181c1b;
+  --color-muted: #414846;
+  --color-outline: #717976;
+  --color-outline-variant: #c1c8c5;
+  --color-teal-fixed: #c6eae2;
+  --color-teal-fixed-dim: #aacec6;
+  --color-herbal-fixed: #b7f397;
+  --color-gold: #d4a300;
+  --color-gold-ink: #7a5e00;
+  --color-danger: #ba1a1a;
+
+  --shadow-l1: 0 2px 8px -2px rgba(9, 45, 40, 0.05);
+  --shadow-l2: 0 8px 24px -4px rgba(9, 45, 40, 0.08);
+  --shadow-l3: 0 20px 40px -8px rgba(9, 45, 40, 0.16);
+  --shadow-focus: 0 0 0 3px rgba(13, 206, 145, 0.2);
+
+  --animate-rise: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-dot: pulse-dot 2s ease-out infinite;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+  @keyframes pulse-dot {
+    0% {
+      box-shadow: 0 0 0 0 rgba(13, 206, 145, 0.55);
+    }
+    100% {
+      box-shadow: 0 0 0 8px rgba(13, 206, 145, 0);
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Type scale */
+@utility text-display {
+  font-size: 36px;
+  line-height: 44px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  @media (width >= 64rem) {
+    font-size: 56px;
+    line-height: 64px;
+    letter-spacing: -0.03em;
+  }
+}
+@utility text-headline-xl {
+  font-size: 28px;
+  line-height: 36px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  @media (width >= 64rem) {
+    font-size: 40px;
+    line-height: 48px;
+    letter-spacing: -0.02em;
+  }
+}
+@utility text-headline-lg {
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+@utility text-headline-md {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+@utility text-headline-sm {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 600;
+}
+@utility text-title-md {
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: 600;
+}
+@utility text-body-lg {
+  font-size: 18px;
+  line-height: 28px;
+}
+@utility text-body-md {
+  font-size: 16px;
+  line-height: 24px;
+}
+@utility text-body-sm {
+  font-size: 14px;
+  line-height: 20px;
+}
+@utility text-label-lg {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+@utility text-label-md {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+@utility text-label-caps {
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@utility container-page {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @media (width >= 40rem) {
+    padding-inline: 2rem;
+  }
+  @media (width >= 64rem) {
+    padding-inline: 3rem;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--color-porcelain);
+    color: var(--color-ink);
+  }
+  ::selection {
+    background: rgba(13, 206, 145, 0.3);
+    color: var(--color-forest);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-mint);
+    outline-offset: 2px;
+  }
+}
+
+/* Brand loader (adapted from Uiverse.io by cosnametv): 3×3 tile grid, logo in the centre */
+.brand-loader {
+  --size: 150px;
+  width: var(--size);
+  height: var(--size);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.brand-loader > span {
+  border-radius: 0.625rem;
+  background-color: var(--color-mint);
+  animation: brand-blink 0.8s alternate infinite linear;
+}
+.brand-loader > span.is-gold {
+  background-color: var(--color-gold);
+}
+.brand-loader > .brand-loader__logo {
+  position: relative;
+  background: none;
+  animation: brand-breathe 1.6s ease-in-out infinite;
+}
+.brand-loader__logo img {
+  position: absolute;
+  inset: -12.5%;
+  width: 125%;
+  height: 125%;
+  max-width: none;
+  object-fit: contain;
+}
+@keyframes brand-blink {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.5) rotate(5deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes brand-breathe {
+  50% {
+    transform: scale(1.12);
+  }
+}
+
+/* Hide the splash even if JavaScript never runs */
+.splash {
+  animation: splash-fallback 0.4s ease 5s forwards;
+}
+@keyframes splash-fallback {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
