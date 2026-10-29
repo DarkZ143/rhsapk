@@ -38,7 +38,7 @@ export const apk = {
   href: "/download/apk",
   fileUrl:
     process.env.APK_DOWNLOAD_URL ||
-    "https://pub-8b7757f6961e4446bb1e0473b118ad34.r2.dev/restorehealthservices.apk",
+    "https://pub-8b7757f6961e4446bb1e0473b118ad34.r2.dev/restorehealth.apk",
   version: "2.0",
   size: "101 MB",
   minAndroid: "Android 8.0+",
